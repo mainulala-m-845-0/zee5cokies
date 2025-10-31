@@ -1,0 +1,55 @@
+name: Extract Unique Cookie (Every 5min)
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  extract_cookie:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🍪 Extract unique cookie and log
+        run: |
+          mkdir -p cookies
+
+          url="https://raw.githubusercontent.com/alex8875/m3u/refs/heads/main/z5.m3u"
+          timestamp=$(TZ="Asia/Dhaka" date +"%Y-%m-%d %H:%M:%S")
+
+          # Get 1st valid cookie
+          cookie=$(curl -s "$url" | grep 'hdntl=exp=' | sed -E 's/.*(hdntl=exp=[^"]+).*/\1/' | head -n 1)
+
+          # If empty, exit
+          if [ -z "$cookie" ]; then
+            echo "❌ No cookie found"; exit 1
+          fi
+
+          echo "$cookie" > cookie.txt
+          echo "[$timestamp] $cookie"
+
+          # Init history file if missing
+          history_file="cookies/history.json"
+          tmp_file="cookies/tmp_history.json"
+          [ ! -f "$history_file" ] && echo "[]" > "$history_file"
+
+          # Prevent duplicate entries (same cookie)
+          if jq -e --arg c "$cookie" '.[] | select(.cookie == $c)' "$history_file" > /dev/null; then
+            echo "⚠️ Duplicate cookie, skipping log"
+          else
+            jq --arg time "$timestamp" --arg cook "$cookie" \
+              '. += [{"timestamp": $time, "cookie": $cook}] | .[-999999999:]' "$history_file" > "$tmp_file" && \
+              mv "$tmp_file" "$history_file"
+          fi
+
+      - name: 📤 Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "actions@github.com"
+
+          git add cookie.txt cookies/history.json
+          git commit -m "🍪 Unique cookie update @ $(TZ='Asia/Dhaka' date '+%Y-%m-%d %H:%M:%S')" || echo "🟡 No changes to commit"
+          git push
