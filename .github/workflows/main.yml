@@ -1,8 +1,8 @@
-name: Extract Unique Cookie (Every 5min)
+name: Extract Unique Cookie (Every 30min)
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
