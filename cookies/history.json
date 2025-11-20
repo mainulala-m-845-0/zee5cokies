@@ -146,5 +146,9 @@
   {
     "timestamp": "2025-11-18 18:53:24",
     "cookie": "hdntl=exp=1763556073~acl=%2f*~id=041c4004-49e5-4f79-82ea-bc4a1b019c06~data=hdntl~hmac=459dc941acab39103466e9117b8991300c3823fbe3934fbc5cfc66ea7256dade"
+  },
+  {
+    "timestamp": "2025-11-20 22:33:21",
+    "cookie": "hdntl=exp=1763740425~acl=%2f*~id=b5e46fd4-95f5-496c-a55e-ad7525879ee5~data=hdntl~hmac=e799b351ab9040fe5c9b4cdf6f8f6dfeb03b922be19fe21d98716b9f72e8c1dc"
   }
 ]
