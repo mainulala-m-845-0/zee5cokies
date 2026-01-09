@@ -498,5 +498,9 @@
   {
     "timestamp": "2026-01-08 18:58:47",
     "cookie": "hdntl=exp=1767962760~acl=%2f*~id=078c016f-0e8a-41ca-a0f6-89dc45c3d52d~data=hdntl~hmac=a6ee894c59293c2bf60afadcd0d775a6dd61c2be1d682ec22ea404558e7b3e0f"
+  },
+  {
+    "timestamp": "2026-01-09 08:10:15",
+    "cookie": "hdntl=exp=1768009548~acl=%2f*~id=34349935-c6d5-47c2-a8d2-07d93adb6a3a~data=hdntl~hmac=7ca096fd9c7aa4f88399440fde6e885067990bd38f2e9a98b77e18bf327630cc"
   }
 ]
